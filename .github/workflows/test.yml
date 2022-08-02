@@ -1,0 +1,19 @@
+name: Merge any release branch to uat
+on:
+  pull_request:
+    types: [opened, closed]
+    branches:
+      - 'release/*'
+      
+jobs:
+  merge-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+
+      - name: Merge master -> deploy
+        uses: devmasx/merge-branch@master
+        with:
+          type: now
+          target_branch: deploy
+          github_token: ${{ github.token }}
